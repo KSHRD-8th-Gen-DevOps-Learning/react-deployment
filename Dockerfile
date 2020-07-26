@@ -14,8 +14,8 @@ RUN npm run build
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
 FROM nginx:alpine
-# Copy the default our nginx configuration to default nginx configuration
-COPY /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+# Copy the default our nginx configuration to default nginx configuration provided by build-stage
+COPY --from=build-stage /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 # Remove all default nginx html
 RUN rm -rf /usr/share/nginx/html/*
 # Copy the default /app/build provided by build-stage
